@@ -1,0 +1,405 @@
+from kivy.app import App
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.button import Button
+from kivy.uix.label import Label
+import random
+from kivy.clock import Clock
+
+class TriviaQuestion:
+    def __init__(self, question, correct, options):
+        self.question = question
+        self.correct = correct
+        self.options = options
+
+class TriviaApp(App):
+    def build(self):
+        # Initialize the main layout
+        parent = BoxLayout(orientation='vertical', padding=10, spacing=10)
+        
+        # Define the questions and options
+        self.questions = [
+        TriviaQuestion(
+                "What country in South America are the famous megalithic H shaped blocks?",
+                "Bolivia",
+                ["Peru", "Brazil", "Chile", "Bolivia"]
+            ),
+            TriviaQuestion(
+                "In what country are the Great Pyramids located?",
+                "Egypt",
+                ["Egypt", "Mexico", "Sudan", "Iraq"]
+            ),
+            TriviaQuestion(
+                "In what country are the Stonehenge megaliths located?",
+                "England",
+                ["England", "France", "Germany", "Ireland"]
+            ),
+            TriviaQuestion(
+                "Which country hosts the ancient city of Machu Picchu?",
+                "Peru",
+                ["Peru", "Bolivia", "Chile", "Argentina"]
+            ),
+            TriviaQuestion(
+                "In what country can you find the ruins of Angkor Wat?",
+                "Cambodia",
+                ["Cambodia", "Thailand", "Vietnam", "Laos"]
+            ),
+            TriviaQuestion(
+                "Which country is home to the Colosseum, an ancient Roman structure?",
+                "Italy",
+                ["Italy", "Spain", "Greece", "Turkey"]
+            ),
+            TriviaQuestion(
+                "In what country are the Easter Island statues (Moai) located?",
+                "Chile",
+                ["Chile", "Brazil", "Argentina", "Peru"]
+            ),
+            TriviaQuestion(
+                "Which country contains the ancient ruins of Petra?",
+                "Jordan",
+                ["Jordan", "Israel", "Syria", "Egypt"]
+            ),
+            TriviaQuestion(
+                "In what country can you find the ruins of Tikal, a major Mayan city?",
+                "Guatemala",
+                ["Guatemala", "Mexico", "Belize", "Honduras"]
+            ),
+            TriviaQuestion(
+                "Which country is home to the Acropolis of Athens?",
+                "Greece",
+                ["Greece", "Turkey", "Italy", "Cyprus"]
+            ),
+            TriviaQuestion(
+                "In what country are the megalithic temples of Ġgantija located?",
+                "Malta",
+                ["Malta", "Italy", "Spain", "Greece"]
+            ),
+            TriviaQuestion(
+                "Which country hosts the ancient city of Chichen Itza?",
+                "Mexico",
+                ["Mexico", "Guatemala", "Belize", "Honduras"]
+            ),
+            TriviaQuestion(
+                "What country is home to the ancient megalithic site of Göbekli Tepe?",
+                "Turkey",
+                ["Turkey", "Syria", "Iraq", "Iran"]
+            ),
+            TriviaQuestion(
+                "In which country can you find the megalithic Carnac Stones?",
+                "France",
+                ["France", "Spain", "Italy", "Germany"]
+            ),
+            TriviaQuestion(
+                "Which country hosts the mysterious Plain of Jars, a megalithic site with giant stone jars?",
+                "Laos",
+                ["Laos", "Thailand", "Vietnam", "Cambodia"]
+            ),
+            TriviaQuestion(
+                "In what country are the megalithic Nuraghe structures, such as Su Nuraxi, located?",
+                "Italy",
+                ["Italy", "Spain", "Greece", "Portugal"]
+            ),
+            TriviaQuestion(
+                "Which country contains the ancient megalithic site of Newgrange, a passage tomb?",
+                "Ireland",
+                ["Ireland", "Scotland", "England", "Wales"]
+            ),
+            TriviaQuestion(
+                "In what country can you find the megalithic hunebeds, or dolmens, in the Drenthe region?",
+                "Netherlands",
+                ["Netherlands", "Belgium", "Germany", "Denmark"]
+            ),
+            TriviaQuestion(
+                "Which country is home to the megalithic structures of the Valley of Marvels in East Hararghe?",
+                "Ethiopia",
+                ["Ethiopia", "Kenya", "Somalia", "Sudan"]
+            ),
+            TriviaQuestion(
+                "In what country are the megalithic dolmens of the Korean Peninsula, like those at Gochang, located?",
+                "South Korea",
+                ["South Korea", "North Korea", "Japan", "China"]
+            ),
+            TriviaQuestion(
+                "Which country hosts the ancient megalithic site of Rujm el-Hiri, also known as Gilgal Refā’īm?",
+                "Israel",
+                ["Israel", "Jordan", "Syria", "Lebanon"]
+            ),
+            TriviaQuestion(
+                "In what country can you find the megalithic stone circles of Avebury?",
+                "England",
+                ["England", "Scotland", "Wales", "Ireland"]
+            ),
+            TriviaQuestion(
+                "Which country is home to the megalithic Osirion, located near the Temple of Seti at Abydos?",
+                "Egypt",
+                ["Egypt", "Sudan", "Libya", "Morocco"]
+            ),
+            TriviaQuestion(
+                "In what country are the megalithic Baalbek Stones, including the Trilithon, located?",
+                "Lebanon",
+                ["Lebanon", "Syria", "Israel", "Jordan"]
+            ),
+            TriviaQuestion(
+                "Which country contains the ancient megalithic site of Gunung Padang, possibly dating back to 20,000 BCE?",
+                "Indonesia",
+                ["Indonesia", "Malaysia", "Philippines", "Thailand"]
+            ),
+            TriviaQuestion(
+                "In what country can you find the megalithic structures of the Lore Lindu National Park, including ancestral statues?",
+                "Indonesia",
+                ["Indonesia", "Papua New Guinea", "Malaysia", "Australia"]
+            ),
+            TriviaQuestion(
+                "Which country hosts the megalithic Menhires of Los Menhires Archaeological Park, featuring engraved stones?",
+                "Argentina",
+                ["Argentina", "Peru", "Chile", "Bolivia"]
+            ),
+            TriviaQuestion(
+                "In what country are the petroglyphs of the Burrup Peninsula, one of the world’s largest collections, located?",
+                "Australia",
+                ["Australia", "New Zealand", "Papua New Guinea", "Fiji"]
+            ),
+            TriviaQuestion(
+                "Which country is home to the ancient petroglyphs at Newspaper Rock State Historic Site in Utah?",
+                "United States",
+                ["United States", "Canada", "Mexico", "Brazil"]
+            ),
+            TriviaQuestion(
+                "In what country can you find the petroglyphs and geoglyphs of the Nazca Lines?",
+                "Peru",
+                ["Peru", "Chile", "Bolivia", "Argentina"]
+            ),
+            TriviaQuestion(
+                "Which country contains the ancient petroglyphs of the Valley of Rocks in the Sahara Desert?",
+                "Algeria",
+                ["Algeria", "Morocco", "Tunisia", "Egypt"]
+            ),
+            TriviaQuestion(
+                "In what country are the petroglyphs of the Tamgaly Tas site, featuring animal and human figures, located?",
+                "Kazakhstan",
+                ["Kazakhstan", "Uzbekistan", "Turkmenistan", "Kyrgyzstan"]
+            ),
+            TriviaQuestion(
+                "Which country hosts the ancient ruins of the Cliff Palace at Mesa Verde National Park?",
+                "United States",
+                ["United States", "Mexico", "Canada", "Brazil"]
+            ),
+            TriviaQuestion(
+                "In what country can you find the ancient ruins of Pavlopetri, a submerged prehistoric town?",
+                "Greece",
+                ["Greece", "Italy", "Turkey", "Cyprus"]
+            ),
+            TriviaQuestion(
+                "Which country is home to the ancient ruins of Karakorum, the former capital of the Mongol Empire?",
+                "Mongolia",
+                ["Mongolia", "China", "Russia", "Kazakhstan"]
+            ),
+            TriviaQuestion(
+                "In what country are the ancient ruins of the Etruscan Pyramid near Viterbo located?",
+                "Italy",
+                ["Italy", "France", "Spain", "Greece"]
+            ),
+            TriviaQuestion(
+                "Which country contains the ancient ruins of the Diquís Spheres in the Diquís Delta?",
+                "Costa Rica",
+                ["Costa Rica", "Panama", "Nicaragua", "Honduras"]
+            ),
+            TriviaQuestion(
+                "In what country can you find the ancient ruins of Skara Brae, a Neolithic settlement on the Orkney Islands?",
+                "Scotland",
+                ["Scotland", "England", "Ireland", "Wales"]
+            ),
+            TriviaQuestion(
+                "Which country hosts the ancient ruins of Bagan, known for its thousands of temples and pagodas?",
+                "Myanmar",
+                ["Myanmar", "Thailand", "Laos", "Cambodia"]
+            ),
+            TriviaQuestion(
+                "In what country are the ancient ruins of Termessos, a fortified city in the Taurus Mountains, located?",
+                "Turkey",
+                ["Turkey", "Greece", "Italy", "Syria"]
+            ),
+            TriviaQuestion(
+                "Which country is home to the ancient ruins of the Giant’s Graves, megalithic tombs built by the Nuragic civilization?",
+                "Italy",
+                ["Italy", "Spain", "Greece", "Portugal"]
+            ),
+            TriviaQuestion(
+                "In what country can you find the ancient ruins of the Ollantaytambo site, featuring massive stone blocks?",
+                "Peru",
+                ["Peru", "Bolivia", "Chile", "Argentina"]
+            ),
+            TriviaQuestion(
+                "Which country contains the ancient ruins of the Poulnabrone Portal Tomb, a megalithic structure?",
+                "Ireland",
+                ["Ireland", "Scotland", "England", "Wales"]
+            ),
+            TriviaQuestion(
+                "In what country are the ancient ruins of the Taenarum site, associated with the mythical gateway to Hades, located?",
+                "Greece",
+                ["Greece", "Italy", "Turkey", "Cyprus"]
+            ),
+            TriviaQuestion(
+                "Which country hosts the ancient ruins of Ayutthaya, a historic capital with numerous temples?",
+                "Thailand",
+                ["Thailand", "Cambodia", "Laos", "Vietnam"]
+            ),
+            TriviaQuestion(
+                "In what country is home to the ancient ruins of the Cahokia Mounds, a pre-Columbian settlement?",
+                "United States",
+                ["United States", "Mexico", "Canada", "Brazil"]
+            ),
+            TriviaQuestion(
+                "Which country contains the ancient ruins of the Gila Cliff Dwellings, a Native American site?",
+                "United States",
+                ["United States", "Mexico", "Canada", "Brazil"]
+            ),
+            TriviaQuestion(
+                "In what country are the ancient ruins of the Aztec Ruins National Monument in New Mexico located?",
+                "United States",
+                ["United States", "Mexico", "Canada", "Brazil"]
+            ),
+            TriviaQuestion(
+                "Which country hosts the ancient ruins of the Hopewell Ceremonial Earthworks?",
+                "United States",
+                ["United States", "Mexico", "Canada", "Brazil"]
+            ),
+            TriviaQuestion(
+                "In what country can you find the ancient ruins of the Monumental Earthworks in the Mississippi Valley, dating back to 3700–3100 BCE?",
+                "United States",
+                ["United States", "Mexico", "Canada", "Brazil"]
+            ),
+            TriviaQuestion(
+                "Which country is home to the ancient ruins of the Rapa Nui (Easter Island) moai statues?",
+                "Chile",
+                ["Chile", "Argentina", "Peru", "Brazil"]
+            )
+        ]
+               
+        # Score counter - reduced height
+        self.score = [0, 0]  # [correct, incorrect]
+        self.score_label = Label(text="Score: Correct - 0, Incorrect - 0", size_hint_y=None, height='40dp')
+        parent.add_widget(self.score_label)
+        
+        # Question label - adjusted size with text wrapping
+        self.question_label = Label(text="", size_hint_y=None, height='160dp', font_size='20sp', 
+                                    text_size=(parent.width - 20, None), halign='center', valign='middle', 
+                                    size_hint=(1, None), markup=True)
+        self.question_label.bind(size=self.on_size, texture_size=self.on_size)
+        parent.add_widget(self.question_label)
+        
+        # Feedback Label for correct/incorrect - increased visibility
+        self.feedback_label = Label(text="", size_hint_y=None, height='80dp', font_size='60sp', color=(1, 1, 1, 1))
+        parent.add_widget(self.feedback_label)
+        
+        # Options layout
+        self.options_layout = BoxLayout(orientation='vertical', spacing=5)
+        parent.add_widget(self.options_layout)
+        
+        # New Game Button
+        new_game_button = Button(text='New Game', on_press=self.reset_game, size_hint_y=None, height='40dp')
+        parent.add_widget(new_game_button)
+        
+        self.available_questions = list(range(len(self.questions)))  # List of indices for random selection
+        random.shuffle(self.available_questions)
+        self.questions_answered = 0  # Track number of questions answered
+        self.max_questions = 10  # Limit to 10 questions per round
+        self.setup_game()
+        
+        return parent
+
+    def on_size(self, instance, value):
+        # Adjust text size when the size of the parent changes (e.g., orientation change)
+        self.question_label.text_size = (instance.width - 20, None)
+
+    def setup_game(self):
+        # Clear existing buttons and feedback
+        self.options_layout.clear_widgets()
+        self.feedback_label.text = ""
+        
+        # If we've reached or exceeded 10 questions, show results
+        if self.questions_answered >= self.max_questions:
+            self.show_results()
+            return
+        
+        # If we've used all questions, reshuffle
+        if not self.available_questions:
+            self.available_questions = list(range(len(self.questions)))
+            random.shuffle(self.available_questions)
+        
+        # Get the current question index from the shuffled list
+        current_index = self.available_questions.pop(0)
+        current_question = self.questions[current_index]
+        
+        # Set the question text
+        self.question_label.text = current_question.question
+        
+        # Shuffle options
+        options = current_question.options.copy()
+        random.shuffle(options)
+        correct_index = options.index(current_question.correct)
+        
+        # Create buttons for each option with half the size
+        for i, option in enumerate(options):
+            button = Button(text=f"{chr(65+i)}. {option}", 
+                            on_press=lambda x, i=i, correct=correct_index: self.answer_clicked(i, correct),
+                            size_hint_y=None, height='30dp')
+            self.options_layout.add_widget(button)
+
+    def answer_clicked(self, index, correct_index):
+        # Disable all buttons after one is clicked
+        for child in self.options_layout.children:
+            child.disabled = True
+        
+        if index == correct_index:
+            self.score[0] += 1
+            self.feedback_label.text = "CORRECT"
+            self.feedback_label.color = (1, 0.5, 0, 1)  # Orange color (RGBA)
+        else:
+            self.score[1] += 1
+            self.feedback_label.text = "INCORRECT"
+            self.feedback_label.color = (1, 0, 0, 1)  # Red color (RGBA)
+        
+        # Update the score display
+        self.score_label.text = f"Score: Correct - {self.score[0]}, Incorrect - {self.score[1]}"
+        
+        # Increment the question counter
+        self.questions_answered += 1
+        
+        # Move to the next question or show results after 10 questions with a 3-second delay
+        if self.questions_answered < self.max_questions:
+            Clock.schedule_once(lambda dt: self.setup_game(), 3.0)
+        else:
+            Clock.schedule_once(lambda dt: self.show_results(), 3.0)
+
+    def show_results(self):
+        # Clear current widgets
+        self.options_layout.clear_widgets()
+        self.question_label.text = ""
+        self.feedback_label.text = ""
+        
+        # Display results based on score
+        result_text = f"Final Score: {self.score[0]} Correct, {self.score[1]} Incorrect"
+        if self.score[0] >= 5:
+            self.feedback_label.text = result_text
+            self.feedback_label.color = (0, 1, 0, 1)  # Large green font
+            self.feedback_label.font_size = '20sp'
+        else:
+            self.feedback_label.text = result_text
+            self.feedback_label.color = (1, 0, 0, 1)  # Large red font
+            self.feedback_label.font_size = '20sp'
+        
+        # Add New Game button for starting over
+        new_game_button = Button(text='New Game', on_press=self.reset_game, size_hint_y=None, height='40dp')
+        self.options_layout.add_widget(new_game_button)
+
+    def reset_game(self, instance):
+        self.score = [0, 0]
+        self.score_label.text = f"Score: Correct - {self.score[0]}, Incorrect - {self.score[1]}"
+        self.feedback_label.text = ""
+        self.questions_answered = 0
+        self.available_questions = list(range(len(self.questions)))  # Reset and shuffle questions
+        random.shuffle(self.available_questions)
+        self.setup_game()
+
+if __name__ == '__main__':
+    TriviaApp().run()
